@@ -1,0 +1,19 @@
+server:
+  port: 8221
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+judge:
+  sandbox:
+    ludd-secret-key: ${LUDD_SECRET_KEY:}
+    ludd-sandbox-url: ${LUDD_SANDBOX_URL:http://localhost:8329}
+    sandbox-name: luddSandbox
+
+spring:
+  application:
+    name: judge-machine

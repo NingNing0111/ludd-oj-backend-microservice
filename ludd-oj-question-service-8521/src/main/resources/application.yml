@@ -1,0 +1,51 @@
+server:
+  port: 8521
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+spring:
+  data:
+    mongodb:
+      host: ${MONGO_DB_HOST:localhost}
+      username: ${MONGO_DB_USERNAME:admin}
+      password: ${MONGO_DB_PASSWORD:admin}
+      database: oj_case
+      port: 27017
+      authentication-database: admin
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5432/oj-ludd
+  jpa:
+    show-sql: true
+    open-in-view: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    virtual-host: /
+    username: root
+    password: root
+    listener:
+      simple:
+        prefetch: 1
+      direct:
+        retry:
+          enabled: true
+          max-attempts: 3
+          initial-interval: 6000
+          max-interval: 6000
+
+  application:
+    name: ludd-oj-question-service
+
