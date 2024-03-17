@@ -56,7 +56,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 }
             }
         }catch (Exception e){
-            log.info("{}",e.getMessage());
+            log.info("====>{}",e.getMessage());
+            UserDetails userDetails = userDetailsService.loadUserByUsername("zdncode@gmail.com");
+            log.info("====>{}",userDetails);
             response.setStatus(403);
         }finally {
             filterChain.doFilter(request,response);

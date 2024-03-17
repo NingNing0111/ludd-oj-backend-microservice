@@ -1,6 +1,7 @@
 package com.ningning0111.config;
 
 import com.ningning0111.filter.JwtAuthFilter;
+import com.ningning0111.model.enums.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +30,12 @@ public class SecurityConfig {
     private static final String[] ALLOW_PATH = {
             "/inner/question/**",
             "/inner/testcase/**",
-            "/api/question/**",
+            "/api/question/content/**",
+            "/api/question/info/**"
+    };
+
+    private static final String[] AUTH_PATH = {
+            "/api/question/add"
     };
 
     @Bean
@@ -39,10 +45,13 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests(req-> req
                 .requestMatchers(ALLOW_PATH)
                 .permitAll()
-                .requestMatchers("/api/question/add")
+                .requestMatchers(AUTH_PATH)
+                .hasAnyAuthority(UserRole.ADMIN.getValue(),UserRole.ROOT.getValue())
+                .anyRequest()
                 .authenticated()
         );
-        httpSecurity.authenticationProvider(provider).addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+        httpSecurity.authenticationProvider(provider)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return httpSecurity.build();
     }

@@ -17,7 +17,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -62,14 +62,15 @@ public class QuestionServiceImpl implements QuestionService {
         List<String> inputData = request.getInputData();
         List<String> outputData = request.getOutputData();
         TestCase testCase = TestCase.builder()
-                .questionId(questionId)
+                .id(questionId)
                 .inputData(inputData)
                 .outputData(outputData)
                 .build();
-        TestCase testCaseQuestion = testCaseRepository.queryTestCaseByQuestionId(questionId);
-        if(testCaseQuestion == null){
+        Optional<TestCase> testcaseOptional = testCaseRepository.findById(questionId);
+        if(!testcaseOptional.isPresent()){
             testCaseRepository.save(testCase);
         }else{
+            TestCase testCaseQuestion = testcaseOptional.get();
             testCaseQuestion.setInputData(inputData);
             testCaseQuestion.setOutputData(outputData);
             testCaseRepository.save(testCaseQuestion);
@@ -125,7 +126,12 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public TestCase queryTestcase(Long questionId) {
 
-        return testCaseRepository.queryTestCaseByQuestionId(questionId);
+        Optional<TestCase> testCase = testCaseRepository.findById(questionId);
+        if(testCase.isPresent()){
+            return testCase.get();
+        }else{
+            return null;
+        }
     }
 
 

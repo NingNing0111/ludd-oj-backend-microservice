@@ -2,6 +2,7 @@ package com.ningning0111.config;
 
 import com.ningning0111.feign.UserFeignClient;
 import com.ningning0111.filter.JwtAuthFilter;
+import com.ningning0111.model.enums.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,6 +41,8 @@ public class SecurityConfig {
                 .requestMatchers(ALLOW_PATH)
                 .permitAll()
                 .requestMatchers("/api/submit/add")
+                .hasAnyAuthority(UserRole.USER.getValue(),UserRole.ADMIN.getValue(),UserRole.ROOT.getValue())
+                .anyRequest()
                 .authenticated()
         );
         httpSecurity.authenticationProvider(provider).addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);

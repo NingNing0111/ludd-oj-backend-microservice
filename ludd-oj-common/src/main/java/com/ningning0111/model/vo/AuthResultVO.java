@@ -3,7 +3,8 @@ package com.ningning0111.model.vo;
 import lombok.Builder;
 import lombok.Data;
 
-import java.sql.Date;
+import java.util.Date;
+
 
 /**
  * @Project: com.ningning0111.model.vo

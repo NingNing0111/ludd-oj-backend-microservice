@@ -5,6 +5,7 @@ import com.ningning0111.feign.UserFeignClient;
 import com.ningning0111.model.entity.User;
 import com.ningning0111.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -33,7 +34,9 @@ public class UserInnerController implements UserFeignClient {
     public User queryUserByEmail(
             @PathVariable String email
     ){
-        return userService.findUserByEmail(email);
+        User userByEmail = userService.findUserByEmail(email);
+        System.out.println(userByEmail);
+        return userByEmail;
     }
 
     @GetMapping("/config/jwt")

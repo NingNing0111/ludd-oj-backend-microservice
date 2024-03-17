@@ -45,7 +45,7 @@ public class SubmitController {
         return service.submit(request);
     }
 
-    @GetMapping("/{page}/{size}")
+    @GetMapping("/content/{page}/{size}")
     public BaseResponse querySubmission(
             @PathVariable Integer page,
             @PathVariable Integer size,

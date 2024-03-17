@@ -12,8 +12,6 @@ import org.springframework.stereotype.Repository;
  * @Description:
  */
 @Repository
-public interface TestCaseRepository extends MongoRepository<TestCase, String> {
-    TestCase queryTestCaseByQuestionId(Long questionId);
+public interface TestCaseRepository extends MongoRepository<TestCase, Long> {
 
-    void deleteTestCaseByQuestionId(Long questionId);
 }

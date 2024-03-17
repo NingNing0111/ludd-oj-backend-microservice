@@ -1,6 +1,10 @@
 server:
   port: 8621
 
+user:
+  root:
+    password: ${ROOT_PASSWORD:luddoj}
+
 eureka:
   instance:
     prefer-ip-address: true
@@ -15,13 +19,13 @@ spring:
     password: postgres
     url: jdbc:postgresql://localhost:5432/oj-ludd
   jpa:
-    show-sql: true
+#    show-sql: true
     open-in-view: true
     hibernate:
       ddl-auto: create
-    properties:
-      hibernate:
-        format_sql: true
+#    properties:
+#      hibernate:
+#        format_sql: true
 
   application:
     name: ludd-oj-user-service

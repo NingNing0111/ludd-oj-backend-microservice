@@ -71,7 +71,6 @@ public class LoginServiceImpl implements LoginService {
             return ResultUtils.success(authResultVO);
 
         } catch (Exception e) {
-            e.printStackTrace();
             return ResultUtils.error(ErrorCode.OPERATION_ERROR,"用户名或密码错误");
         }
 

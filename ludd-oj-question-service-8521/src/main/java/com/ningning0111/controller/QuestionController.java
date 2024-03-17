@@ -53,7 +53,7 @@ public class QuestionController {
     }
 
 
-    @GetMapping("/{page}/{size}")
+    @GetMapping("/content/{page}/{size}")
     public BaseResponse queryQuestions(
             @PathVariable Integer page,
             @PathVariable Integer size,
@@ -62,7 +62,7 @@ public class QuestionController {
         return service.queryQuestionPage(request,page,size);
     }
 
-    @GetMapping("/{questionId}")
+    @GetMapping("/info/{questionId}")
     public BaseResponse queryQuestionById(
             @PathVariable Long questionId
     ){

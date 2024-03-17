@@ -1,17 +1,21 @@
 package com.ningning0111.model.entity;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.ningning0111.model.enums.UserRole;
+import com.ningning0111.serializer.CustomAuthorityDeserializer;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
-import java.sql.Date;
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @Project: com.ningning0111.model.entity
@@ -27,7 +31,7 @@ import java.util.Collection;
 // user在PG中是保留字，因此使用users
 @Table(name = "users")
 @Data
-public class User implements Serializable, UserDetails {
+public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -59,8 +63,10 @@ public class User implements Serializable, UserDetails {
     private static final long serialVersionUID = 1L;
 
     @Override
+    @JsonDeserialize(using = CustomAuthorityDeserializer.class)
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        System.out.println(role.getValue());
+        return List.of(new SimpleGrantedAuthority(role.getValue()));
     }
 
     @Override

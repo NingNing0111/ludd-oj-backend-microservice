@@ -1,13 +1,13 @@
 package com.ningning0111.controller;
 
 import com.ningning0111.common.BaseResponse;
+import com.ningning0111.model.dto.user.UserBanRequest;
+import com.ningning0111.model.dto.user.UserQueryRequest;
+import com.ningning0111.model.dto.user.UserUpdateRequest;
 import com.ningning0111.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @Project: com.ningning0111.controller
@@ -28,5 +28,35 @@ public class UserController {
     public BaseResponse getUserInfo(@RequestHeader String authorization){
         String token = authorization.substring(7);
         return userService.getUserInfoByToken(token);
+    }
+
+    @GetMapping("/list/{page}/{size}")
+    public BaseResponse getUsersInfo(
+            @PathVariable int page,
+            @PathVariable int size,
+            UserQueryRequest request
+    ){
+        return userService.queryUser(request,page,size);
+    }
+
+    @DeleteMapping("/del/{questionId}")
+    public BaseResponse deleteUser(
+            @PathVariable Long questionId
+    ){
+        return userService.delUser(questionId);
+    }
+
+    @PostMapping("/update")
+    public BaseResponse updateUser(
+            @RequestBody UserUpdateRequest request
+    ){
+        return userService.updateUser(request);
+    }
+
+    @PostMapping("/ban")
+    public BaseResponse banUser(
+            @RequestBody UserBanRequest request
+    ){
+        return userService.banUser(request);
     }
 }

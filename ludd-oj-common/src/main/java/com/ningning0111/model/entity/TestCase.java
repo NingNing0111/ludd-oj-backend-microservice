@@ -1,8 +1,10 @@
 package com.ningning0111.model.entity;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -22,18 +24,16 @@ import java.util.List;
 @Document
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class TestCase implements Serializable {
-    /**
-     * 测试用例ID
-     */
-    @Id
-    private String id;
+
 
     /**
      * 题目ID
      */
-    @Indexed(unique = true)
-    private Long questionId;
+    @Id
+    private Long id;
 
     /**
      * 输入数据

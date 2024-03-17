@@ -28,6 +28,8 @@ import java.nio.charset.StandardCharsets;
 @RequiredArgsConstructor
 @Slf4j
 public class GlobalAuthFilter implements GlobalFilter, Ordered {
+
+
     private AntPathMatcher antPathMatcher = new AntPathMatcher();
 
     @Override

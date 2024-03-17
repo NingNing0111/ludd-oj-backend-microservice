@@ -3,6 +3,7 @@ package com.ningning0111.feign;
 import com.ningning0111.config.JwtConfig;
 import com.ningning0111.model.entity.User;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
  * @Date: 2024/3/14 00:15
  * @Description:
  */
-@FeignClient(name = "ludd-oj-user-service",url = "/inner/user")
+@FeignClient(value="ludd-oj-user-service",path = "/inner/user")
 public interface UserFeignClient {
     @GetMapping("/get/{userId}")
     User queryUserById(@PathVariable Long userId);

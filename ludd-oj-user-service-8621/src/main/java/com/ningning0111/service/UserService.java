@@ -2,8 +2,11 @@ package com.ningning0111.service;
 
 import com.ningning0111.common.BaseResponse;
 import com.ningning0111.model.dto.user.UserAddRequest;
+import com.ningning0111.model.dto.user.UserBanRequest;
+import com.ningning0111.model.dto.user.UserQueryRequest;
 import com.ningning0111.model.dto.user.UserUpdateRequest;
 import com.ningning0111.model.entity.User;
+import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * @Project: com.ningning0111.service
@@ -42,10 +45,15 @@ public interface UserService {
      */
     BaseResponse queryUser(Long userId);
 
+    BaseResponse queryUser(UserQueryRequest request, int page, int size);
+
     User findUserById(Long userId);
 
     BaseResponse getUserInfoByToken(String token);
 
     User findUserByEmail(String email);
+
+    BaseResponse banUser(UserBanRequest userBanRequest);
+
 
 }

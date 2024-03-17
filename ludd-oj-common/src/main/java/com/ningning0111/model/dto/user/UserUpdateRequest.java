@@ -1,5 +1,6 @@
 package com.ningning0111.model.dto.user;
 
+import com.ningning0111.model.enums.UserRole;
 import lombok.Data;
 
 /**
@@ -11,12 +12,15 @@ import lombok.Data;
  */
 @Data
 public class UserUpdateRequest {
+    private Long userId;
     // 昵称
     private String nickname;
     // 角色
-    private String role;
+    private UserRole role;
     // 头像地址
     private String userAvatar;
     // 个人简介
     private String userProfile;
+    // 密码
+    private String password;
 }

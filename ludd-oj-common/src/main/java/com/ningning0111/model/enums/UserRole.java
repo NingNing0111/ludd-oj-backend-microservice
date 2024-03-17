@@ -1,5 +1,6 @@
 package com.ningning0111.model.enums;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.util.ObjectUtils;
 
 import java.util.Arrays;
@@ -13,7 +14,7 @@ import java.util.stream.Collectors;
  * @Date: 2024/3/4 12:35
  * @Description:
  */
-public enum UserRole {
+public enum UserRole implements GrantedAuthority {
     USER("用户", "user"),
     ADMIN("管理员", "admin"),
     ROOT("超级管理员","root");
@@ -62,4 +63,8 @@ public enum UserRole {
         return text;
     }
 
+    @Override
+    public String getAuthority() {
+        return name();
+    }
 }

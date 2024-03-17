@@ -37,7 +37,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         final String username;
         // 如果请求头authorization信息不存在
         if(authHeader == null || !authHeader.startsWith("Bearer ")){
-            log.info("authorization不存在");
+            log.info("authorization 不存在");
             filterChain.doFilter(request,response);
             return;
         }
@@ -56,6 +56,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 }
             }
         }catch (Exception e){
+            e.printStackTrace();
             log.info("{}",e.getMessage());
         }finally {
             filterChain.doFilter(request,response);

@@ -1,6 +1,7 @@
 package com.ningning0111.config;
 
 import com.ningning0111.filter.JwtAuthFilter;
+import com.ningning0111.model.enums.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,7 +31,14 @@ public class SecurityConfig {
             "/inner/user/**",
             "/api/user/register/**",
             "/api/user/login/**",
-            "/api/user/generate/**"
+            "/api/user/generate/**",
+    };
+
+    private static final String[] ROOT_PATH = {
+            "/api/user/del/**",
+            "/api/user/update",
+            "/api/user/ban",
+            "/api/user/list/**"
     };
 
     @Bean
@@ -40,6 +48,8 @@ public class SecurityConfig {
         httpSecurity.authorizeHttpRequests(req-> req
                 .requestMatchers(ALLOW_PATH)
                 .permitAll()
+                .requestMatchers(ROOT_PATH)
+                .hasAnyAuthority(UserRole.ROOT.getValue())
                 .anyRequest()
                 .authenticated()
         );

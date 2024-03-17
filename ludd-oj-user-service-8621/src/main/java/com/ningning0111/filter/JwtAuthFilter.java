@@ -1,6 +1,10 @@
 package com.ningning0111.filter;
 
+import com.ningning0111.common.ErrorCode;
+import com.ningning0111.exception.BusinessException;
+import com.ningning0111.exception.ThrowUtils;
 import com.ningning0111.util.JwtUtils;
+import io.netty.handler.codec.http.HttpResponseStatus;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -42,12 +46,11 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             return;
         }
         jwt = authHeader.substring(7);
-        log.info("jwt:{}",jwt);
         try {
             username = jwtUtils.extractEmail(jwt);
             if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
-                log.info("{}",userDetails.getAuthorities());
+                log.info("====>{}",userDetails);
                 if(jwtUtils.isTokenValid(jwt,userDetails)){
                     UsernamePasswordAuthenticationToken authTokenAuth = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                     authTokenAuth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
@@ -56,7 +59,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 }
             }
         }catch (Exception e){
-            log.info("{}",e.getMessage());
+            e.printStackTrace();
+            throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
         }finally {
             filterChain.doFilter(request,response);
         }
